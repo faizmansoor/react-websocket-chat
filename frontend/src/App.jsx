@@ -1,12 +1,12 @@
 import react from "react"
-import ChatApp from "./pages/Chat"; 
+import Chat from "./pages/Chat"; 
 
 
 function App() {
 
   return(
     <div>
-      <ChatApp />
+      <Chat />
     </div>
   )
   
