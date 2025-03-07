@@ -1,6 +1,7 @@
 import react,{useState,useEffect,useRef,useContext} from "react"
 import {io} from "socket.io-client"
 import UsernameForm from "../components/UsernameForm"
+import NameContext from "../contexts/NameContext"
 
 const socket = io("http://localhost:3000");
 
@@ -10,9 +11,7 @@ const socket = io("http://localhost:3000");
 
 //TO DO:
 
-//cleanup Chat, form component and remove the reused code(compare with NameContext)
-//need to wrap the app in a context provider to pass the username to the components, pass setUsername to the UsernameForm component
-//import the context
+//load state to delay flickering of form when local storage is accessed
 
 
 //5. pass username as well as message to server 
@@ -28,23 +27,10 @@ function Chat(){
     const [messages, setMessages] = useState([]);
     const inputRef = useRef(null); //a reference to the input element, so that the value of the input element can be accessed without re-rendering the component
     const messagesEndRef = useRef(null);
-    const [username, setUsername] = useState("");
+    const { username, handleSetUsername } = useContext(NameContext);
 
-    function handleSetUsername(name){
-        setUsername(name);
-        localStorage.setItem("username",name);
-    }
 
-    // retrieve the username from localStorage once when the component loads/page refreshes for persistence
-    useEffect(()=>{
-        const username = localStorage.getItem("username");
-        if(username){
-            setUsername(username); //localStorage interactions(set, read) should be managed in the topmost component that needs the data(change to provider setting it)
-        }
-        console.log("username",username)
-    },[])
-
-    
+ 
 
     //useEffect is executed only once on component mounting so that event listener is not duplicated
     //the socket event listener here is a persistent connection to the server, and is an event listener for the "message" event, which is emitted by the server
@@ -81,7 +67,7 @@ function Chat(){
     };
     return (
         <div>
-            {!username && <UsernameForm setUsername = {handleSetUsername} />}
+            {!username && <UsernameForm />}
 
 
             {username && 

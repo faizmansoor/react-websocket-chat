@@ -2,7 +2,7 @@
 
 A simple real-time chat application built with **React, WebSockets, and Socket.io** to deepen my understanding of WebSockets and React hooks like `useContext`,`useEffect`,`useRef`.
 
-## 🚀 Features
+## Features
 
 -**Real-time messaging** with WebSockets  
 -**Username persistence** using localStorage  

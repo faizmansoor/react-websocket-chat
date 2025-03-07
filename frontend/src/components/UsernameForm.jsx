@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import  NameContext from "../contexts/NameContext"; 
 
-function UsernameForm({ setUsername }) {
+
+function UsernameForm() {
     const [name, setName] = useState("");
+    const { setUsername } = useContext(NameContext); 
 
     function handleSubmit(e) {
-        e.preventDefault(); 
-        if (name.trim()) { // Ensure username is not empty
-            setUsername(name);
+        e.preventDefault();
+        if (name.trim()) {
+            setUsername(name); // Update username globally
         }
     }
 

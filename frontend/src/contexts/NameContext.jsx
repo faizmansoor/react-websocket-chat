@@ -1,4 +1,4 @@
-import {react,createContext} from "react"
+import  react,{useState,useEffect, createContext} from "react"
 
 
 //We create the context 
@@ -12,12 +12,14 @@ const NameContext = createContext(); //creates a context object that has a built
 export function NameProvider({children}) //children is a React prop that represents all components wrapped inside the NameProvider component
 //NameProvider runs when first mounted, and when the state changes, it re-renders all the children components
 {
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(() => localStorage.getItem("username") || ""); 
+    // ^^^ This ensures username is set BEFORE render, avoiding unnecessary UsernameForm flashes
 
+    // retrieve the username from localStorage once when the component loads/page refreshes for persistence
     useEffect(() => {
         const storedUsername = localStorage.getItem("username");
         if (storedUsername) {
-            setUsername(storedUsername);
+            setUsername(storedUsername); //localStorage interactions(set, read) should be managed in the topmost component that needs the data
         }
     }, []);
 
@@ -25,12 +27,19 @@ export function NameProvider({children}) //children is a React prop that represe
         setUsername(name);
         localStorage.setItem("username", name);
     }
+
+    //.Provider (inside the custom context component) is where we store and pass state & functions.
+        // {children} becomes <App />.
     return( 
-        //.Provider (inside the custom context component) is where we store and pass state & functions.
-        <NameContext.Provider value = {{username, handleSetUsername}}>
+        
+        <NameContext.Provider value = {{username, 
+        handleSetUsername}}>
             {children}
+        
        
         </NameContext.Provider>
-        //Any component that consumes the context re-renders when the state inside the provider changes.
+        
     ) 
+    //Any component that consumes the context re-renders when the state inside the provider changes.
 }
+export default NameContext;
