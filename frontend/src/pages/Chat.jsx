@@ -65,9 +65,12 @@ function Chat(){
         }  
 
     };
+    
     return (
         <div>
+
             {!username && <UsernameForm />}
+            
 
 
             {username && 
