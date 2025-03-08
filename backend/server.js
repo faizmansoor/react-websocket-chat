@@ -23,16 +23,30 @@ app.get('/',(req,res)=>{
     res.send("Server is ready")
 })
 
-io.on("connection",(socket)=>{
-    console.log("New connection")
-    socket.on("message",(msg)=>{
-        io.emit("message",msg)
-    })
+io.on("connection", (socket) => {
+    console.log("New connection");
+    
+    socket.on("message", (messageData) => {
+      // Broadcast the message data (containing both username and text)
+      io.emit("message", messageData);
+      console.log(`Message from ${messageData.user}: ${messageData.text}`);
+    });
 
-    socket.on("disconnect",()=>{
-        console.log("User disconnected")
-    })
-})
+    socket.on("typing", (data) => {
+      // Broadcast to all clients except the sender
+      socket.broadcast.emit("typing", data);
+      
+      if (data.isTyping) {
+        console.log(`${data.user} is typing...`);
+      } else {
+        console.log(`${data.user} stopped typing`);
+      }
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("User disconnected");
+    });
+  });
 
 
 
