@@ -13,7 +13,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("http://localhost:5173/chat");  // ✅ Redirect to frontend /chat after login
+    res.redirect("http://localhost:5173/chat");  
   }
 );
 

@@ -1,45 +1,36 @@
-import  react,{useState,useEffect, createContext} from "react"
+import { createContext, useState, useEffect } from "react";
+import { getAuthUser, updateUsername } from "../../utils/api";  
 
+const NameContext = createContext();
 
-//We create the context 
-// We make a component (NameProvider) that wraps other components.
-// Inside NameProvider, we store and provide the state & functions.
-// We wrap the whole app (or a section of it) inside <NameProvider> to share state globally.
-// Any child component can use useContext(NameContext) to access username and functions.
+export function NameProvider({ children }) {
+    const [username, setUsername] = useState(""); 
+    const [loading, setLoading] = useState(true); // Loading state to avoid flickers
 
-const NameContext = createContext(); //creates a context object that has a built in Provider component and a Consumer component
-
-export function NameProvider({children}) //children is a React prop that represents all components wrapped inside the NameProvider component
-//NameProvider runs when first mounted, and when the state changes, it re-renders all the children components
-{
-    const [username, setUsername] = useState(() => localStorage.getItem("username") || ""); 
-    // ^^^ This ensures username is set BEFORE render, avoiding unnecessary UsernameForm flashes
-
-    // retrieve the username from localStorage once when the component loads/page refreshes for persistence
+    // Fetch user from the backend when the app loads
     useEffect(() => {
-        const storedUsername = localStorage.getItem("username");
-        if (storedUsername) {
-            setUsername(storedUsername); //localStorage interactions(set, read) should be managed in the topmost component that needs the data
-        }
+        getAuthUser()
+            .then(({ data }) => {
+                if (data.username) {
+                    setUsername(data.username);  
+                }
+            })
+            .catch(() => setUsername(""))
+            .finally(() => setLoading(false));
     }, []);
 
-    function handleSetUsername(name) {
-        setUsername(name);
-        localStorage.setItem("username", name);
+    async function handleSetUsername(name) {
+        await updateUsername(name);  //  Save to backend
+        setUsername(name);  
     }
 
-    //.Provider (inside the custom context component) is where we store and pass state & functions.
-        // {children} becomes <App />.
-    return( 
-        
-        <NameContext.Provider value = {{username, 
-        handleSetUsername}}>
+    if (loading) return <p>Loading...</p>; 
+
+    return (
+        <NameContext.Provider value={{ username, handleSetUsername }}>
             {children}
-        
-       
         </NameContext.Provider>
-        
-    ) 
-    //Any component that consumes the context re-renders when the state inside the provider changes.
+    );
 }
+
 export default NameContext;

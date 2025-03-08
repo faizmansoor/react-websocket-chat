@@ -6,7 +6,7 @@ export default function Register() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();  // ✅ Initialize navigation
+  const navigate = useNavigate();  
 
   useEffect(() => {
     getAuthUser()
