@@ -1,7 +1,8 @@
 import react,{useState,useEffect,useRef,useContext} from "react"
 import {io} from "socket.io-client"
-import UsernameForm from "../components/UsernameForm"
-import NameContext from "../contexts/NameContext"
+import UsernameForm from "../../components/UsernameForm"
+import NameContext from "../../contexts/NameContext"
+import "./Chat.css";
 
 const socket = io("http://localhost:3000");
 
@@ -111,40 +112,45 @@ function Chat(){
 
 
             {username && (
-        <div>
-          <ul id="messages">
-            {messages.map((message, index) => (
-              <li key={index}>
-                <strong>{message.user}: </strong>{message.text}
-              </li>
-            ))}
-            <div ref={messagesEndRef} />
-          </ul>
-
-          {otherTypingUsers.length > 0 && (
-            <div className="typing-indicator">
-              {otherTypingUsers.length === 1 ? (
-                <p>{otherTypingUsers[0]} is typing...</p>
-              ) : (
-                <p>{otherTypingUsers.join(", ")} are typing...</p>
-              )}
-            </div>
-          )}
-
-
-          <form onSubmit={handleSubmit} id="form" action="">
-          <input 
+  <div className="chat-container">
+    <div className="messages-container">
+      <ul id="messages">
+        {messages.map((message, index) => (
+          <li key={index}>
+            <strong>{message.user}: </strong>{message.text}
+          </li>
+        ))}
+        <div ref={messagesEndRef} />
+      </ul>
+    </div>
+    
+    <div className="input-area">
+      <div className="typing-indicator">
+        {otherTypingUsers.length > 0 ? (
+          otherTypingUsers.length === 1 ? (
+            <p>{otherTypingUsers[0]} is typing...</p>
+          ) : (
+            <p>{otherTypingUsers.join(", ")} are typing...</p>
+          )
+        ) : (
+          <p>&nbsp;</p> // Empty space holder to maintain consistent layout
+        )}
+      </div>
+      
+      <form onSubmit={handleSubmit} id="form" action="">
+        <input 
           ref={inputRef} 
           id="input" 
           autoComplete="off"
           onChange={handleInputChange} 
-          />
-            <button>Send</button>
-          </form>
-        </div>
-      )}
+        />
+        <button>Send</button>
+      </form>
     </div>
-  );
+  </div>
+)}
+</div>
+);
 }
 
 export default Chat
