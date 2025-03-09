@@ -99,7 +99,7 @@ function Chat() {
                             <p>{otherTypingUsers.join(", ")} are typing...</p>
                         )
                     ) : (
-                        <p>&nbsp;</p>
+                        ""
                     )}
                 </div>
 
@@ -110,7 +110,8 @@ function Chat() {
                         autoComplete="off"
                         onChange={handleInputChange} 
                     />
-                    <button>Send</button>
+                    
+                    <button >Send</button>
                 </form>
             </div>
         </div>

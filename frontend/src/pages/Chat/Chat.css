@@ -35,7 +35,7 @@ html, body {
   font-size: 12px;
   height: 16px;
   color: #666;
-  
+  margin-bottom: 5px;
   
   position: absolute;
   bottom: 100%; /* Keep it above input */

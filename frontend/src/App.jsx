@@ -6,6 +6,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
+    <div className="text-red-500">
+      Hello World
+    
+
     <Router>
       <Routes>
         <Route path="/" element={<Register />} />
@@ -13,6 +17,7 @@ function App() {
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
+    </div>
   );
 }
 
