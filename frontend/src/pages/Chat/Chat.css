@@ -23,18 +23,22 @@ html, body {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
+  margin: 40px;
+  border: 1px solid black;
+  border-radius: 10px; 
 }
 
 .message {
   padding: 8px;
   margin-bottom: 5px;
-  color: white !important;  
+  
+  
   
   
   border-radius: 5px;
 }
 .msg-text{
-  color: white;
+  color: black
 }
 
 .input-area {
@@ -61,11 +65,7 @@ html, body {
   margin-bottom: 17px;
   color: black;
 }
-#messages{
-  color: white;
-  
-  
-}
+
 
 .send {
   background-color: #007bff;

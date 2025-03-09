@@ -11,6 +11,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import chatSocket from "./sockets/chatSocket.js";
+import commonMessageRoute from "./routes/commonMessageRoute.js";
 
 import "./config/passport.js"; // Import passport config
 
@@ -30,11 +31,13 @@ connectDB();
 
 // Middleware
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -43,6 +46,7 @@ app.use(express.json()); // Ensure JSON body parsing
 // Routes
 app.use("/auth", authRoutes);
 app.use("/message", messageRoutes);
+app.use("/common", commonMessageRoute);
 
 app.get("/", (req, res) => {
   res.send("Server is ready");
