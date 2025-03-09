@@ -1,48 +1,85 @@
 html, body {
-  overflow: hidden; /* Prevents browser from adding a scrollbar */
+  overflow: hidden; 
   height: 100%;
+  
+}
+
+.chat-wrapper {
+  display: flex;
+  height: 100vh;
+  margin-left: 250px;
+  
 }
 
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; 
+  flex-grow: 1;
+  height: 100vh;
+  
 }
 
 .messages-container {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 30px; 
-  min-height: 50px; 
+  padding: 20px;
 }
 
-
-#messages li:first-child {
-  margin-top: 10px; 
-  padding-top: 45px;
+.message {
+  padding: 8px;
+  margin-bottom: 5px;
+  color: white !important;  
+  
+  
+  border-radius: 5px;
+}
+.msg-text{
+  color: white;
 }
 
 .input-area {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: white;
+  
+}
+
+.form {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  gap: 10px;
+}
+
+#input {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(245, 245, 245, 0.786);
+  margin-bottom: 17px;
+  color: black;
+}
+#messages{
+  color: white;
+  
+  
+}
+
+.send {
+  background-color: #007bff;
+  margin-left: 10px;
+  margin-bottom: 17px;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .typing-indicator {
   font-size: 12px;
-  height: 16px;
-  color: #666;
-  margin-bottom: 5px;
-  
-  position: absolute;
-  bottom: 100%; /* Keep it above input */
-  left: 0; 
-  transform: none; 
-  padding-left: 10px; 
-  width: auto;
-  white-space: nowrap;
+  color: #bbb;
+  padding-bottom: 5px;
 }
-

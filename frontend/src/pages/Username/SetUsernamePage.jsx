@@ -9,7 +9,7 @@ function SetUsernamePage() {
 
     // If the user already has a username, go to chat
     if (username) {
-        navigate("/chat");
+        navigate("/dashboard");
     }
 
     return (

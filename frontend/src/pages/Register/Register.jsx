@@ -12,7 +12,7 @@ export default function Register() {
     getAuthUser()
       .then(({ data }) => {
         setUser(data);
-        if (data.username) navigate("/chat");  
+        if (data.username) navigate("/dashboard");  
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -21,7 +21,7 @@ export default function Register() {
   const handleUsernameSubmit = async () => {
     await updateUsername(username);
     setUser({ ...user, username });
-    navigate("/chat");  
+    navigate("/dashboard");  
   };
 
   if (loading) return <p>Loading...</p>;

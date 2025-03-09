@@ -1,16 +1,19 @@
 import User from "../models/User";
 import Common from "../models/Common";
 
-
 export const getCommonMessages = async (req, res) => {
     try {
-        const commonMessages = await Common.find();
+        const commonMessages = await Common.find()
+            .sort({ _id: -1 }) //newest first
+            .limit(50); 
+
         res.status(200).json(commonMessages);
     } catch (error) {
         console.error("Error in getCommonMessages: ", error.message);
         res.status(500).json({ error: "Server Error" });
     }
-}
+};
+
 
 export const sendCommonMessage = async (req, res) => {
     try{

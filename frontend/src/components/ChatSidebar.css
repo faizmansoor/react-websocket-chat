@@ -1,0 +1,11 @@
+.chat-sidebar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    height: 100vh; 
+    width: 250px; 
+    
+    background-color:  #1D232A;
+    z-index: 1000; 
+  }
+  
