@@ -12,7 +12,7 @@ import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import chatSocket from "./sockets/chatSocket.js";
 import commonMessageRoute from "./routes/commonMessageRoute.js";
-
+import { ensureAuthenticated } from "./middleware/authMiddleware.js";
 import "./config/passport.js"; // Import passport config
 
 dotenv.config();
@@ -40,6 +40,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(ensureAuthenticated);
 
 app.use(express.json()); // Ensure JSON body parsing
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UsernameForm from "../../components/UsernameForm";
 import NameContext from "../../contexts/NameContext";
 
+
 function SetUsernamePage() {
     const { username } = useContext(NameContext);
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ function SetUsernamePage() {
 
     return (
         <div>
-            <h2>Set Your Username</h2>
+            
             <UsernameForm />
         </div>
     );
