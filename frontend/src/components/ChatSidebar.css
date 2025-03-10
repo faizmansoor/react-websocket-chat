@@ -1,11 +1,156 @@
 .chat-sidebar {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    height: 100vh; 
-    width: 250px; 
-    
-    background-color:  #1D232A;
-    z-index: 1000; 
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #1D232A;
+  color: #f0f4f8;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: width 0.3s ease;
+}
+
+.chat-sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar-header {
+  padding: 20px 16px;
+  border-bottom: 1px solid #2e384d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #b4bcc8;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.toggle-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+  margin: 0;
+  list-style-type: none;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.sidebar-item {
+  margin-bottom: 4px;
+  padding: 0 12px;
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: transparent;
+  border: none;
+  color: #b4bcc8;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.chat-sidebar.collapsed .sidebar-button {
+  justify-content: center;
+  padding: 12px;
+}
+
+.sidebar-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sidebar-button.active {
+  background-color: rgba(74, 123, 255, 0.2);
+  color: #4a7bff;
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-right: 12px;
+  color: inherit;
+}
+
+.chat-sidebar.collapsed .sidebar-icon {
+  margin-right: 0;
+}
+
+.sidebar-footer {
+  padding: 16px;
+  margin-top: auto;
+  border-top: 1px solid #2e384d;
+}
+
+.logout-button {
+  color: #ff7070;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 112, 112, 0.1);
+}
+
+/* Tooltip for collapsed sidebar */
+.chat-sidebar.collapsed .sidebar-button::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 85px;
+  background-color: #2a3441;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1001;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.chat-sidebar.collapsed .sidebar-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Adjust margin for main content when sidebar collapses */
+.users-container, 
+.dashboard-container, 
+.chat-container {
+  transition: margin-left 0.3s ease;
+}

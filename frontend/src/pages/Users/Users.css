@@ -1,0 +1,105 @@
+.users-container {
+    margin-left: 250px;
+    padding: 20px;
+    height: 96vh;
+    background-color: #1a1f2c; /* Keep dark background as requested */
+    color: #f0f0f0;
+  }
+  
+  .users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .user-card {
+    background-color: #222a3b;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #3a4356;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+  
+  .username {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ffffff;
+  }
+  
+  .chat-button {
+    background-color: #4a7bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .chat-button:hover {
+    background-color: #3a6aef;
+  }
+  
+  .chat-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #2e3648;
+    padding-bottom: 15px;
+  }
+  
+  .users-title {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .users-count {
+    background-color: #4a7bff;
+    color: white;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .users-grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+  }

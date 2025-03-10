@@ -68,7 +68,7 @@ html, body {
 
 
 .send {
-  background-color: #007bff;
+  background-color: #4a7bff;
   margin-left: 10px;
   margin-bottom: 17px;
   color: white;
@@ -76,6 +76,9 @@ html, body {
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
+}
+.send:hover {
+  background-color: #3a6aef;
 }
 
 .typing-indicator {

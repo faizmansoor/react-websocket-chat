@@ -8,7 +8,11 @@ export const getAuthUser = () => axios.get(`${API_BASE_URL}/auth/user`);
 export const loginWithGoogle = () => {
   window.location.href = `${API_BASE_URL}/auth/google`;
 };
-export const logout = () => axios.get(`${API_BASE_URL}/logout`);
+export const logout = async () => {
+  await axios.get(`${API_BASE_URL}/auth/logout`);
+  // Return to let the component know logout was successful
+  return true;
+};
 export const updateUsername = (username) =>
   axios.post(`${API_BASE_URL}/auth/set-username`, { username });
 
