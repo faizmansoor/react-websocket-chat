@@ -5,7 +5,7 @@ import Register from "./pages/Register/Register";
 import SetUsernamePage from "./pages/Username/SetUsernamePage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { ChatSidebar } from "./components/ChatSidebar";
-import OnlineUsers from "./pages/OnlineUsers/OnlineUsers";
+import Users from "./pages/Users/Users";
 
 function Layout() {
   const location = useLocation();
@@ -23,7 +23,7 @@ function Layout() {
           <Route path="/set-username" element={<SetUsernamePage />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/online-users" element={<OnlineUsers />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
       </div>
     </div>

@@ -20,8 +20,8 @@ export function ChatSidebar() {
           </button>
         </li>
         <li>
-          <button className="py-2 px-4 text-lg" onClick={() => navigate("/online-users")}>
-            Online Users
+          <button className="py-2 px-4 text-lg" onClick={() => navigate("/users")}>
+            Users
           </button>
         </li>
       </ul>

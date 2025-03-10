@@ -2,6 +2,7 @@ import express from "express";
 import passport from "passport";
 import User from "../models/User.js";
 import { ensureAuthenticated } from "../middleware/authMiddleware.js";
+import e from "cors";
 
 const router = express.Router();
 
@@ -19,6 +20,18 @@ router.get(
     res.redirect("http://localhost:5173/chat");
   }
 );
+
+//get all usernames for the Users frontend component
+router.get("/users", ensureAuthenticated, async (req, res) => {
+  try {
+    const users = await User.find({}, "username");
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error in authRoutes (getting all users): ", error.message);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
 
 // Get Authenticated User
 router.get("/user", (req, res) => {

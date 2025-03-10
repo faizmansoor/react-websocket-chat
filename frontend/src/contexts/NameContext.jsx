@@ -4,15 +4,16 @@ import { getAuthUser, updateUsername } from "../../utils/api";
 const NameContext = createContext();
 
 export function NameProvider({ children }) {
-    const [username, setUsername] = useState(""); 
-    const [loading, setLoading] = useState(true); // Loading state to avoid flickers
+    
+    const [username, setUsername] = useState(localStorage.getItem("username") || ""); 
+    const [loading, setLoading] = useState(true); 
 
-    // Fetch user from the backend when the app loads
     useEffect(() => {
         getAuthUser()
             .then(({ data }) => {
                 if (data.username) {
                     setUsername(data.username);  
+                    localStorage.setItem("username", data.username); // Persist username
                 }
             })
             .catch(() => setUsername(""))
@@ -20,7 +21,7 @@ export function NameProvider({ children }) {
     }, []);
 
     async function handleSetUsername(name) {
-        await updateUsername(name);  //  Save to backend
+        await updateUsername(name);  
         setUsername(name);  
     }
 
