@@ -42,7 +42,7 @@ export function ChatSidebar() {
   return (
     <div className={`chat-sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-header">
-        {!collapsed && <h2 className="sidebar-title">ChatApp</h2>}
+        {!collapsed && <h2 className="sidebar-title">ChatSync</h2>}
         <button className="toggle-button" onClick={toggleSidebar}>
           {collapsed ? (
             <svg className="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
