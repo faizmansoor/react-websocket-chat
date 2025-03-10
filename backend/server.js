@@ -12,7 +12,6 @@ import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import chatSocket from "./sockets/chatSocket.js";
 import commonMessageRoute from "./routes/commonMessageRoute.js";
-import { ensureAuthenticated } from "./middleware/authMiddleware.js";
 import "./config/passport.js"; // Import passport config
 
 dotenv.config();
@@ -31,16 +30,18 @@ connectDB();
 
 // Middleware
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+//use connect-mongo or redis to store session data for production
+//When a session is created, express-session automatically sets a cookie on the client.
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(ensureAuthenticated);
 
 app.use(express.json()); // Ensure JSON body parsing
 
