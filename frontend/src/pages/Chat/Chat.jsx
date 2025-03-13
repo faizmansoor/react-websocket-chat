@@ -21,9 +21,6 @@ function Chat() {
         }
     }, [username, navigate]);
 
-   
-    
-
     useEffect(() => {
         socket.on("message", (msg) => {
             console.log("Listening for messages...");
@@ -84,14 +81,16 @@ function Chat() {
     return (
         <div className="chat-wrapper">
             <div className="chat-container">
-                <div className="messages-container">
+                <div className="messages-container" style = {{backgroundColor:"#1a1f2c" }}>
                     <ul id="messages">
                         {messages.map((message, index) => (
-                            <li key={index} className="message">
-                                <strong>{message.user}: </strong>
+                            <li 
+                                key={index} 
+                                className={`message ${message.user === username ? 'own-message' : ''}`}
+                            >
+                                <strong>{message.user === username ? 'You' : message.user}</strong>
                                 {message.text}
                             </li>
-
                         ))}
                         <div ref={messagesEndRef} />
                     </ul>
@@ -108,14 +107,16 @@ function Chat() {
                         )}
                     </div>
 
-                    <form onSubmit={handleSubmit} className="form">
+                    <form onSubmit={handleSubmit} className="form" style = {{backgroundColor:"#1a1f2c" }}>
                         <input 
                             ref={inputRef} 
                             id="input" 
                             autoComplete="off"
-                            onChange={handleInputChange} 
+                            onChange={handleInputChange}
+                            placeholder="Type your message here..."
+                            
                         />
-                        <button className = "send">Send</button>
+                        <button className="send" aria-label="Send message"></button>
                     </form>
                 </div>
             </div>
