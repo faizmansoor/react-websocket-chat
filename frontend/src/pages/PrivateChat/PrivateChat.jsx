@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import NameContext from "../../contexts/NameContext";
 import "./PrivateChat.css";
 
-const socket = io("http://localhost:3000");
 
 function PrivateChat() {
     const navigate = useNavigate();  
@@ -17,6 +16,13 @@ function PrivateChat() {
     const typingTimeoutRef = useRef(null);
 
 
+    const socketRef = useRef(null);
+
+    useEffect(() => {
+        if (!socketRef.current) {
+            socketRef.current = io("http://localhost:3000");
+        }
+    }, []);
 
     useEffect(() => {
         if (!username) {
@@ -25,27 +31,58 @@ function PrivateChat() {
     }, [username, navigate]);
 
     useEffect(() => {
+        if (username && receiver) {
+            console.log(`Joining private room: ${username} - ${receiver}`);
+            socketRef.current.emit("joinPrivateRoom", { username, receiver }, (response) => {
+                console.log("Server response for joinPrivateRoom:", response);
+            });
+        }
+    
+        return () => {
+            socketRef.current.emit("leavePrivateRoom", { username, receiver });
+        };
+    }, [username, receiver]);
+    
+
+    useEffect(() => {
             if (messagesEndRef.current) {
                 messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
             }
         }, [messages, typingUser]);
 
-        function handleInputChange() {
-            // if (typingTimeoutRef.current) {
-            //     clearTimeout(typingTimeoutRef.current);
-            // }
-    
-            // socket.emit("typing", { user: username, isTyping: true });
-    
-            // typingTimeoutRef.current = setTimeout(() => {
-            //     socket.emit("typing", { user: username, isTyping: false });
-            // }, 2000);
-        }
+    // Add this useEffect to listen for private messages
+useEffect(() => {
+    if (socketRef.current) {
+      // Listen for private messages
+      socketRef.current.on("receivePrivateMessage", (messageData) => {
+        console.log("Received private message:", messageData);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            user: messageData.sender,
+            text: messageData.text,
+            // Include image if you're handling it
+            ...(messageData.image && { image: messageData.image })
+          }
+        ]);
+      });
+  
+      // Clean up the event listener when component unmounts
+      return () => {
+        socketRef.current.off("receivePrivateMessage");
+      };
+    }
+  }, [socketRef.current]);
+
+
+
+        
         
         function handleSubmit(e) {
             e.preventDefault();
+            
             if (inputRef.current.value && username) {
-                socket.emit("privateMessage", {
+                socketRef.current.emit("privateMessage", {
                     sender: username,
                     receiver,  
                     text: inputRef.current.value

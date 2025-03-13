@@ -20,7 +20,7 @@ function Layout() {
       {/* Main Content Area */}
       <div className={hideSidebarRoutes.includes(location.pathname) ? "w-full" : "flex-grow p-4"}>
         <Routes>
-          <Route path="/private-chat/:username" element={<PrivateChat />} />
+          <Route path="/private-chat/:receiver" element={<PrivateChat />} />
           <Route path="/" element={<Register />} />
           <Route path="/set-username" element={<SetUsernamePage />} />
           <Route path="/chat" element={<Chat />} />
