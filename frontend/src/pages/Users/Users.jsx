@@ -8,6 +8,7 @@ function Users() {
   const { username } = useContext(NameContext);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     getAllUsernames()

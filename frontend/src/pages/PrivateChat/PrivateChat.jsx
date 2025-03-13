@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { io } from "socket.io-client";
-import { useNavigate } from "react-router-dom";  
+import { useNavigate, useParams } from "react-router-dom";  
 import NameContext from "../../contexts/NameContext";
 import "./PrivateChat.css";
 
@@ -9,11 +9,14 @@ const socket = io("http://localhost:3000");
 function PrivateChat() {
     const navigate = useNavigate();  
     const {username} = useContext(NameContext);
+    const { receiver} = useParams();
     const [typingUser, setTypingUser] = useState([]);
     const messagesEndRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const inputRef = useRef(null);
     const typingTimeoutRef = useRef(null);
+
+
 
     useEffect(() => {
         if (!username) {
@@ -41,15 +44,14 @@ function PrivateChat() {
         
         function handleSubmit(e) {
             e.preventDefault();
-            // if (inputRef.current.value && username) {
-            //     socket.emit("message", {
-            //         user: username,
-            //         text: inputRef.current.value
-            //     });
-            //     clearTimeout(typingTimeoutRef.current);
-            //     socket.emit("typing", { user: username, isTyping: false });
-            //     inputRef.current.value = "";
-            // }
+            if (inputRef.current.value && username) {
+                socket.emit("privateMessage", {
+                    sender: username,
+                    receiver,  
+                    text: inputRef.current.value
+                });
+                inputRef.current.value = "";
+            }
         }
 
         const otherTypingUser = typingUser.filter((user) => user !== username);
