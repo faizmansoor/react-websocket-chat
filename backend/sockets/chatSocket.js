@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Message from "../models/message.js";
 
 const chatSocket = (io) => {
   io.on("connection", (socket) => {
@@ -37,7 +38,7 @@ const chatSocket = (io) => {
       }
     });
 
-    // Handle private messages
+    // Handle private messages with persistence
     socket.on("privateMessage", async ({ sender, receiver, text, image }) => {
       console.log("New private message:", { sender, receiver, text, image });
       try {
@@ -52,6 +53,16 @@ const chatSocket = (io) => {
         const senderId = senderUser._id.toString();
         const receiverId = receiverUser._id.toString();
 
+        // Save message to database for persistence
+        const newMessage = new Message({
+          senderId,
+          receiverId,
+          text,
+          image,
+        });
+        await newMessage.save();
+
+        // Emit to room for real-time delivery
         const roomName = [senderId, receiverId].sort().join("-");
         io.to(roomName).emit("receivePrivateMessage", {
           sender: senderUser.username,
@@ -59,6 +70,7 @@ const chatSocket = (io) => {
           receiverId,
           text,
           image,
+          _id: newMessage._id,
         });
 
         console.log(`Message sent from ${sender} to ${receiver}: ${text}`);
