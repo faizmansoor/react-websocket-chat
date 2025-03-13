@@ -17,7 +17,7 @@ function Chat() {
     
     useEffect(() => {
         if (!username) {
-            navigate("/set-username");  
+            navigate("/");  
         }
     }, [username, navigate]);
 

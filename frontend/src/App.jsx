@@ -6,6 +6,7 @@ import SetUsernamePage from "./pages/Username/SetUsernamePage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { ChatSidebar } from "./components/ChatSidebar";
 import Users from "./pages/Users/Users";
+import PrivateChat from "./pages/PrivateChat/PrivateChat";
 
 function Layout() {
   const location = useLocation();
@@ -19,6 +20,7 @@ function Layout() {
       {/* Main Content Area */}
       <div className={hideSidebarRoutes.includes(location.pathname) ? "w-full" : "flex-grow p-4"}>
         <Routes>
+          <Route path="/private-chat/:username" element={<PrivateChat />} />
           <Route path="/" element={<Register />} />
           <Route path="/set-username" element={<SetUsernamePage />} />
           <Route path="/chat" element={<Chat />} />

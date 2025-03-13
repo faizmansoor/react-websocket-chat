@@ -29,8 +29,8 @@ function Users() {
   }, [username]);
 
   const handleChatClick = (user) => {
-    // Navigate to chat component with selected user
-    navigate(`/chat/${user}`);
+    // Navigate to private-chat component with selected user
+    navigate(`/private-chat/${user}`);
   };
 
   // Function to get the first letter of username for avatar with safeguard
