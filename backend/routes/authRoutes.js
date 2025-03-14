@@ -45,7 +45,7 @@ router.get("/logout", (req, res, next) => {
   req.session.destroy((err) => {
     if (err) return next(err);
     req.logout(() => {
-      res.redirect("http://localhost:5173/");
+      res.status(200).clearCookie();
     });
   });
 });

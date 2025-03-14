@@ -30,7 +30,7 @@ export const getMessages = async (req, res) => {
         { senderId: myId, receiverId: receiverId },
         { senderId: receiverId, receiverId: myId },
       ],
-    }).populate("senderId", "username"); // Populate the sender's username
+    }).populate("senderId", "username");
 
     // Transform messages to include sender username
     const formattedMessages = messages.map((msg) => ({

@@ -12,8 +12,7 @@ export const loginWithGoogle = () => {
 };
 
 export const logout = async () => {
-  await axiosInstance.get("/auth/logout");
-  return true;
+  await axiosInstance.get("/auth/logout").then((window.location.href = "/"));
 };
 
 export const updateUsername = (username) =>

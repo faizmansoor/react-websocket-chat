@@ -17,7 +17,10 @@ export function ChatSidebar() {
 
   const handleLogout = async () => {
     try {
+      console.log("Before logout")
       await logout(); 
+      console.log("After logout")
+
       navigate("/");
       
     } catch (error) {
