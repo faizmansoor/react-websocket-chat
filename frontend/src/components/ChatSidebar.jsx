@@ -18,7 +18,6 @@ export function ChatSidebar() {
   const handleLogout = async () => {
     try {
       await logout(); 
-      // After logout is complete, explicitly navigate to home route
       navigate("/");
       
     } catch (error) {

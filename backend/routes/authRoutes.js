@@ -2,7 +2,6 @@ import express from "express";
 import passport from "passport";
 import User from "../models/User.js";
 import { ensureAuthenticated } from "../middleware/authMiddleware.js";
-import e from "cors";
 
 const router = express.Router();
 
@@ -21,7 +20,6 @@ router.get(
   }
 );
 
-//get all usernames for the Users frontend component
 router.get("/users", ensureAuthenticated, async (req, res) => {
   try {
     const users = await User.find({}, "username");

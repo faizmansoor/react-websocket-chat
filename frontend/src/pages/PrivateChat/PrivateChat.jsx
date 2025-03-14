@@ -40,17 +40,17 @@ function PrivateChat() {
                     const response = await axios.get(`http://localhost:3000/message/${receiver}`, {
                         withCredentials: true
                     });
+                    console.log("FFetched messages:", response.data);
                     
-                    // Transform messages to match our component's format
                     const formattedMessages = response.data.map(msg => ({
-                        user: msg.senderId === username ? username : receiver,
+                        user: msg.senderUsername,
                         text: msg.text,
                         image: msg.image
                     }));
                     
                     setMessages(formattedMessages);
                 } catch (error) {
-                    console.error("Error fetching messages:", error);
+                    console.error("Error fffetching messages:", error);
                 } finally {
                     setIsLoading(false);
                 }
@@ -140,7 +140,7 @@ function PrivateChat() {
                 });
             } catch (error) {
                 console.error("Failed to send message via API:", error);
-                // You could add error handling here
+                
             }
             
             inputRef.current.value = "";

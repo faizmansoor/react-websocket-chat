@@ -14,20 +14,34 @@ export const getUsersForSideBar = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
-
 export const getMessages = async (req, res) => {
   try {
-    const { id: userToChatToId } = req.params;
+    const { receiver } = req.params;
     const myId = req.user._id;
+    const receiverUser = await User.findOne({ username: receiver });
+
+    if (!receiverUser) {
+      return res.status(404).json({ message: "Receiver not found" });
+    }
+    const receiverId = receiverUser._id;
 
     const messages = await Message.find({
       $or: [
-        { senderId: myId, receiverId: userToChatToId },
-        { senderId: userToChatToId, receiverId: myId },
+        { senderId: myId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: myId },
       ],
-    });
+    }).populate("senderId", "username"); // Populate the sender's username
 
-    res.status(200).json(messages);
+    // Transform messages to include sender username
+    const formattedMessages = messages.map((msg) => ({
+      senderId: msg.senderId._id,
+      senderUsername: msg.senderId.username,
+      receiverId: msg.receiverId,
+      text: msg.text,
+      image: msg.image,
+    }));
+
+    res.status(200).json(formattedMessages);
   } catch (error) {
     console.log("Error in getMessages controller: ", error.message);
     res.status(500).json({ error: "Server Error" });
@@ -37,7 +51,12 @@ export const getMessages = async (req, res) => {
 export const sendMessage = async (req, res) => {
   try {
     const { text, image } = req.body;
-    const { id: receiverId } = req.params;
+    const { receiver } = req.params;
+    const receiverUser = await User.findOne({ username: receiver });
+    if (!receiverUser) {
+      return res.status(404).json({ message: "Receiver not found" });
+    }
+    const receiverId = receiverUser._id;
     const senderId = req.user._id;
 
     let imageUrl;
@@ -52,8 +71,6 @@ export const sendMessage = async (req, res) => {
       image: imageUrl,
     });
     await newMessage.save();
-
-    //to do : real time message sending using socket.io
     res.status(201).json(newMessage);
   } catch (error) {
     console.log("Error in sendMessage controller: ", error.message);
