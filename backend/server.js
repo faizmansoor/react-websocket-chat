@@ -11,7 +11,6 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import chatSocket from "./sockets/chatSocket.js";
-import commonMessageRoute from "./routes/commonMessageRoute.js";
 import "./config/passport.js"; // Import passport config
 
 dotenv.config();
@@ -56,7 +55,6 @@ app.use(express.json()); // Ensure JSON body parsing
 // Routes
 app.use("/auth", authRoutes);
 app.use("/message", messageRoutes);
-app.use("/common", commonMessageRoute);
 
 app.get("/", (req, res) => {
   res.send("Server is ready");
