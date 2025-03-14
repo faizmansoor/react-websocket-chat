@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import NameContext from "../../contexts/NameContext";
 import "./Chat.css";
 
-const socket = io("http://localhost:3000");
+
+const socket = io(import.meta.env.VITE_BACKEND_URL);
 
 function Chat() {
     const [messages, setMessages] = useState([]);

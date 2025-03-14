@@ -20,7 +20,7 @@ function PrivateChat() {
     // Connect to socket
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io("http://localhost:3000");
+            socketRef.current = io(import.meta.env.VITE_BACKEND_URL);
         }
     }, []);
 
@@ -37,7 +37,7 @@ function PrivateChat() {
             if (username && receiver) {
                 try {
                     setIsLoading(true);
-                    const response = await axios.get(`http://localhost:3000/message/${receiver}`, {
+                    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/message/${receiver}`, {
                         withCredentials: true
                     });
                     console.log("FFetched messages:", response.data);
@@ -133,7 +133,7 @@ function PrivateChat() {
             
             // Also send via REST API to ensure persistence
             try {
-                await axios.post(`http://localhost:3000/message/send/${receiver}`, {
+                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/message/send/${receiver}`, {
                     text: messageText
                 }, {
                     withCredentials: true
