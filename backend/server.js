@@ -11,7 +11,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import chatSocket from "./sockets/chatSocket.js";
-import "./config/passport.js"; // Import passport config
+import "./config/passport.js";
+import MongoStore from "connect-mongo";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ const io = new Server(server, {
 // Database Connection
 connectDB();
 
+app.use(express.json());
 // Middleware
 app.use(
   cors({
@@ -38,19 +40,26 @@ app.use(
   })
 );
 
-//use connect-mongo or redis to store session data for production
 //When a session is created, express-session automatically sets a cookie on the client.
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      ttl: 14 * 24 * 60 * 60,
+      autoRemove: "native",
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 14, // 14 days
+    },
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(express.json()); // Ensure JSON body parsing
 
 // Routes
 app.use("/auth", authRoutes);
